@@ -4,7 +4,7 @@ const morgan = require("morgan");
 //const { handleErrors, currentUser } = require("./middleware");
 // const { NotFoundError } = require("./errors");
 
-// const { authRouter } = require("./routes/auth");
+const { authRouter } = require("./router/User");
 // const { postsRouter } = require("./routes/posts");
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(morgan("dev"));
 /**
  * Routers
  */
-//app.use("/auth", authRouter);
+app.use("/auth", authRouter);
 //app.use("/posts", postsRouter);
 
 /**

@@ -10,7 +10,7 @@ const RecipesSchema = new Schema({
 
   ingredienrs: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Ingredienrs",
     },
   ],

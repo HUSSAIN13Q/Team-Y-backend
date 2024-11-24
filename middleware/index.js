@@ -1,7 +1,7 @@
 const currentUser = require("./currentUser");
 const handleErrors = require("./handleErrors");
-const requireAuth = require("../../express-review-posts/middleware/requireAuth");
-const validateRequest = require("../../express-review-posts/middleware/validateRequest");
+const requireAuth = require("./requireAuth");
+const validateRequest = require("./validateRequest");
 
 module.exports = {
   handleErrors,
