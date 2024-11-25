@@ -5,7 +5,7 @@ const PasswordManager = require("../helpers/PasswordManager");
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  Image: { type: String },
+  image: { type: String },
 
   myRecipes: [
     {

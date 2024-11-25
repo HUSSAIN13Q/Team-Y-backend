@@ -2,16 +2,16 @@ const { model, Schema } = require("mongoose");
 
 const RecipesSchema = new Schema({
   name: { type: String, required: true },
-  Descrotion: { type: String, required: true },
-  Image: { type: String, required: true },
+  desorption: { type: String, required: true },
+  image: { type: String, required: true },
 
   author: { type: Schema.Types.ObjectId, ref: "User" },
-  Catagory: { type: Schema.Types.ObjectId, ref: "Catagory" },
+  category: { type: Schema.Types.ObjectId, ref: "Category" },
 
-  ingredienrs: [
+  ingredients: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Ingredienrs",
+      ref: "Ingredients",
     },
   ],
 });
