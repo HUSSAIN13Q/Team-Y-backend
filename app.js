@@ -8,6 +8,7 @@ const { NotFoundError } = require("./errors");
 const { authRouter } = require("./router/User");
 const { recipesRouter } = require("./router/Recipes");
 const { ingredientRouter } = require("./router/Ingredients");
+const { categoryRouter } = require("./router/Category");
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ app.use(currentUser);
 app.use("/auth", authRouter);
 app.use("/recipe", recipesRouter);
 app.use("/ingredient", ingredientRouter);
+app.use("/category", categoryRouter);
 /**
  * Not Found Catchall
  */

@@ -1,3 +1,8 @@
+const express = require("express");
+const Category = require("../../models/Category");
+
+const router = express.Router();
+
 router.get("/:id", async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).populate(
@@ -13,4 +18,4 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = { getCategoryRouter: router };
