@@ -29,12 +29,12 @@ router.post("/", requireAuth, validators, validateRequest, async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    // const ingredientDocs = await Ingredients.find({
-    //   _id: { $in: ingredients },
-    // });
     const ingredientDocs = await Ingredients.find({
-      name: { $in: ingredients },
+      _id: { $in: ingredients },
     });
+    // const ingredientDocs = await Ingredients.find({
+    //   name: { $in: ingredients },
+    // });
 
     console.log("ING", ingredientDocs);
     if (ingredientDocs.length !== ingredients.length) {
