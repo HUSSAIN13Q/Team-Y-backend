@@ -29,9 +29,14 @@ router.post("/", requireAuth, validators, validateRequest, async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     }
 
+    // const ingredientDocs = await Ingredients.find({
+    //   _id: { $in: ingredients },
+    // });
     const ingredientDocs = await Ingredients.find({
-      _id: { $in: ingredients },
+      name: { $in: ingredients },
     });
+
+    console.log("ING", ingredientDocs);
     if (ingredientDocs.length !== ingredients.length) {
       return res.status(404).json({ message: "Some ingredients not found" });
     }
@@ -50,11 +55,16 @@ router.post("/", requireAuth, validators, validateRequest, async (req, res) => {
     categoryDoc.recipes.push(newRecipe._id);
     await categoryDoc.save();
 
-    const populatedRecipe = await newRecipe
+    // const populatedRecipe = await newRecipe
+    //   .populate("author", "-password -__v")
+    //   .populate("category", "name")
+    //   .populate("ingredients", "name");
+
+    // res.status(201).json(populatedRecipe);
+    const populatedRecipe = await Recipes.findById(newRecipe._id)
       .populate("author", "-password -__v")
       .populate("category", "name")
-      .populate("ingredients", "name")
-      .exec();
+      .populate("ingredients", "name");
 
     res.status(201).json(populatedRecipe);
   } catch (err) {

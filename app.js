@@ -36,6 +36,6 @@ app.all("*", (req) => {
 /**
  * Error Handling
  */
-// app.use(handleErrors);
+app.use(handleErrors);
 
 module.exports = app;
