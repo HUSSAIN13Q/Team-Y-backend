@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 var cors = require("cors");
+const path = require("path");
 
 const { handleErrors, currentUser } = require("./middleware");
 const { NotFoundError } = require("./errors");
@@ -26,6 +27,8 @@ app.use("/auth", authRouter);
 app.use("/recipe", recipesRouter);
 app.use("/ingredient", ingredientRouter);
 app.use("/category", categoryRouter);
+app.use("/media", express.static(path.join(__dirname, "media")));
+
 /**
  * Not Found Catchall
  */
