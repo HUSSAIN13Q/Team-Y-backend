@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+var cors = require("cors");
 
 const { handleErrors, currentUser } = require("./middleware");
 const { NotFoundError } = require("./errors");
@@ -9,7 +10,7 @@ const { authRouter } = require("./router/User");
 const { RecipesRouter } = require("./router/Recipes");
 
 const app = express();
-
+app.use(cors());
 /**
  * Middleware
  */
