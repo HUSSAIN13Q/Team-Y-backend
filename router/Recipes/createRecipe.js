@@ -2,8 +2,8 @@ const express = require("express");
 const { body } = require("express-validator");
 
 const Recipes = require("../../models/Recipes");
-const Ingredients = require("../../models/Ingredients");
-const Category = require("../../models/Category");
+const Ingredients = require("../../models/Ingredient");
+const Category = require("../../models/Catagory");
 const User = require("../../models/User");
 
 const { requireAuth, validateRequest } = require("../../middleware");

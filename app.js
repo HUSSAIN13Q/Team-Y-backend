@@ -6,8 +6,8 @@ const { handleErrors, currentUser } = require("./middleware");
 const { NotFoundError } = require("./errors");
 
 const { authRouter } = require("./router/User");
-// const { postsRouter } = require("./routes/posts");
-const { RecipesRouter } = require("./router/Recipes");
+const { recipesRouter } = require("./router/Recipes");
+const { ingredientRouter } = require("./router/Ingredients");
 
 const app = express();
 app.use(cors());
@@ -18,12 +18,12 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(currentUser);
 
-/**
+/*
  * Routers
  */
 app.use("/auth", authRouter);
-app.use("/recipe", RecipesRouter);
-
+app.use("/recipe", recipesRouter);
+app.use("/ingredient", ingredientRouter);
 /**
  * Not Found Catchall
  */

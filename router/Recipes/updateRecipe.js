@@ -4,8 +4,8 @@ const findRecipe = require("./findRecipe");
 const validateRequest = require("../../middleware/validateRequest");
 const { body } = require("express-validator");
 const { requireAuth } = require("../../middleware");
-const Ingredients = require("../../models/Ingredients");
-const Category = require("../../models/Category");
+const Ingredients = require("../../models/Ingredient");
+const Category = require("../../models/Catagory");
 
 const validators = [
   body("name").not().notEmpty().withMessage("Name is required"),

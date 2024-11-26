@@ -1,3 +1,8 @@
+const express = require("express");
+const Ingredient = require("../../models/Ingredient");
+
+const router = express.Router();
+
 router.post("/", async (req, res) => {
   const { name } = req.body;
   try {
@@ -9,4 +14,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = { newIngredientRouter: router };
