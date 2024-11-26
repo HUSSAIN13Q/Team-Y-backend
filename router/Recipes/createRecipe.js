@@ -2,6 +2,8 @@ const express = require("express");
 const { body } = require("express-validator");
 
 const Recipes = require("../../models/Recipes");
+const Ingredients = require("../../models/Ingredients");
+const Category = require("../../models/Category");
 const User = require("../../models/User");
 
 const { requireAuth, validateRequest } = require("../../middleware");
@@ -9,25 +11,56 @@ const { requireAuth, validateRequest } = require("../../middleware");
 const router = express.Router();
 
 const validators = [
-  body("name").not().isEmpty().withMessage("Title is required"),
-  body("content").not().isEmpty().withMessage("Content is required"),
+  body("name").notEmpty().withMessage("Recipe name is required"),
+  body("description").notEmpty().withMessage("Description is required"),
+  body("image").notEmpty().withMessage("Image URL is required"),
+  body("category").notEmpty().withMessage("Category ID is required"),
+  body("ingredients")
+    .isArray({ min: 1 })
+    .withMessage("At least one ingredient is required"),
 ];
 
 router.post("/", requireAuth, validators, validateRequest, async (req, res) => {
-  const newPost = await Post.create(req.body);
+  try {
+    const { name, description, image, category, ingredients } = req.body;
 
-  const author = await User.findById(req.user.id);
+    const categoryDoc = await Category.findById(category);
+    if (!categoryDoc) {
+      return res.status(404).json({ message: "Category not found" });
+    }
 
-  newPost.author = author.id;
+    const ingredientDocs = await Ingredients.find({
+      _id: { $in: ingredients },
+    });
+    if (ingredientDocs.length !== ingredients.length) {
+      return res.status(404).json({ message: "Some ingredients not found" });
+    }
 
-  author.posts.push(newPost.id);
+    const newRecipe = new Recipes({
+      name,
+      description,
+      image,
+      author: req.user.id,
+      category,
+      ingredients,
+    });
 
-  await newPost.save();
-  await author.save();
+    await newRecipe.save();
 
-  res
-    .status(201)
-    .json(await newPost.populate("author", "-password -__v -posts"));
+    categoryDoc.recipes.push(newRecipe._id);
+    await categoryDoc.save();
+
+    const populatedRecipe = await newRecipe
+      .populate("author", "-password -__v")
+      .populate("category", "name")
+      .populate("ingredients", "name")
+      .exec();
+
+    res.status(201).json(populatedRecipe);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
-module.exports = { postCreateRouter: router };
+module.exports = { recipeCreateRouter: router };
