@@ -3,7 +3,7 @@ const Recipes = require("../../models/Recipes");
 
 const findRecipes = async function (req, res, next, id) {
   const findRecipe = await Recipes.findById(id);
-
+  console.log(findRecipe);
   if (!findRecipe) return next(NotFoundError("Post not found"));
 
   req.recipe = findRecipe;
